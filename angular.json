@@ -119,6 +119,124 @@
       },
       "tags": [],
       "implicitDependencies": ["my-app"]
+    },
+    "ngrx1": {
+      "projectType": "application",
+      "root": "apps/ngrx1",
+      "sourceRoot": "apps/ngrx1/src",
+      "prefix": "stackblitz-nx-angular",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/ngrx1",
+            "index": "apps/ngrx1/src/index.html",
+            "main": "apps/ngrx1/src/main.ts",
+            "polyfills": "apps/ngrx1/src/polyfills.ts",
+            "tsConfig": "apps/ngrx1/tsconfig.app.json",
+            "assets": ["apps/ngrx1/src/favicon.ico", "apps/ngrx1/src/assets"],
+            "styles": ["apps/ngrx1/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/ngrx1/src/environments/environment.ts",
+                  "with": "apps/ngrx1/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "ngrx1:build:production"
+            },
+            "development": {
+              "browserTarget": "ngrx1:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ngrx1:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ngrx1/src/**/*.ts",
+              "apps/ngrx1/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/ngrx1"],
+          "options": {
+            "jestConfig": "apps/ngrx1/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "ngrx1-e2e": {
+      "root": "apps/ngrx1-e2e",
+      "sourceRoot": "apps/ngrx1-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ngrx1-e2e/cypress.json",
+            "devServerTarget": "ngrx1:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngrx1:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/ngrx1-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["ngrx1"]
     }
   }
 }
